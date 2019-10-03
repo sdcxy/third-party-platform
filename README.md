@@ -1,7 +1,15 @@
 # Third-Party-PlatForm
 
 一   微信公众号工具类使用方法
-   1.  配置类 继承 com.github.sdcxy.wechat.config.WeChatConfig类
+   1.   pom 文件添加依赖
+        ```$xslt
+            <dependency>
+                <groupId>com.github.sdcxy</groupId>
+                <artifactId>third-party-platform</artifactId>
+                <version>0.0.1</version>
+            </dependency>
+        ```
+   2.  配置类 继承 com.github.sdcxy.wechat.config.WeChatConfig类
         ```
             配置文件: application.yml
             weixin:
@@ -17,7 +25,7 @@
             
             }   
         ```
-   2. 接入方法: com.github.sdcxy.wechat.service.impl.WeChatServiceImpl 的weChatIn
+   3. 接入方法: com.github.sdcxy.wechat.service.impl.WeChatServiceImpl 的weChatIn
         ```
             @Autowired
             private WeiXinConfig weiXinConfig;
@@ -31,7 +39,7 @@
             }
            
         ```
-   3.  响应消息方法: com.github.sdcxy.wechat.service.impl.WeChatServiceImpl 的weChatCallBack
+   4.  响应消息方法: com.github.sdcxy.wechat.service.impl.WeChatServiceImpl 的weChatCallBack
         ```
             @PostMapping(value = "/wechat/in")
             @ResponseBody
@@ -40,7 +48,7 @@
                 return weChatService.weChatCallBack(request, weiXinConfig.getToken());
             }
         ```
-   4.   消息响应类处理; com.github.sdcxy.wechat.service.impl.MessageServiceImpl
+   5.   消息响应类处理: com.github.sdcxy.wechat.service.impl.MessageServiceImpl
         ```$xslt
             实现那种消息回复，直接实现对应消息类的接口的parseXXXMessage方法即可（XXX之接口类）
             文本消息: Text 接口 
@@ -50,4 +58,5 @@
             短视频消息: ShortVideo 接口
             地理消息: Location 接口
             链接消息: Link 接口     
+            .....event 事件处理方法与消息处理方法一致。详细请查看源码
         ```
