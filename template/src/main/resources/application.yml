@@ -1,0 +1,7 @@
+server:
+  port: 443
+weixin:
+  appId: wxce9f254281767870
+  appSecret: 991c2c2402458318c526e25508488339
+  token: lxx
+  wechat: gh_1df6cfc0432c
