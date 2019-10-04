@@ -1,4 +1,4 @@
-package com.github.sdcxy.wechat.entity.menu;
+package com.github.sdcxy.wechat.core.entity.menu;
 
 
 import lombok.Data;

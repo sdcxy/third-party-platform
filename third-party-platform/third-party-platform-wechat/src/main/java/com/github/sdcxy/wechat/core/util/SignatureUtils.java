@@ -1,8 +1,7 @@
-package com.github.sdcxy.wechat.util;
+package com.github.sdcxy.wechat.core.util;
 
-import com.github.sdcxy.util.CheckObjectIsNullUtils;
-import com.github.sdcxy.util.EncryptUtils;
-import com.github.sdcxy.wechat.config.SignatureConfig;
+import com.github.sdcxy.wechat.common.util.EncryptUtils;
+import com.github.sdcxy.wechat.core.entity.SignatureConfig;
 import org.apache.commons.lang3.StringUtils;
 
 import java.util.Arrays;
@@ -21,9 +20,9 @@ public class SignatureUtils {
      * @param token
      * @return
      */
-    public static boolean checkSignature(SignatureConfig signatureConfig,String token) {
+    public static boolean checkSignature(SignatureConfig signatureConfig, String token) {
         boolean resultFlag = false;
-        if (CheckObjectIsNullUtils.isNotEmpty(signatureConfig)) {
+        if (signatureConfig != null) {
             // 用数据保存起来
             String arr[] = new String[]{token,signatureConfig.getTimestamp(),signatureConfig.getNonce()};
 

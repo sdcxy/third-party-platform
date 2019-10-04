@@ -1,4 +1,4 @@
-package com.github.sdcxy.util;
+package com.github.sdcxy.wechat.common.util;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.http.HttpEntity;
@@ -29,7 +29,7 @@ import java.util.Map;
  * @Author lxx
  * @Date 2019/9/29 13:27
  **/
-public class HttpClientUtils{
+public class HttpClientUtils {
 
 
     /**

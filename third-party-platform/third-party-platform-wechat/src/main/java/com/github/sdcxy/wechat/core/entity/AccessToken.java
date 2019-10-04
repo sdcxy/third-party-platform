@@ -1,8 +1,6 @@
-package com.github.sdcxy.wechat.entity;
+package com.github.sdcxy.wechat.core.entity;
 
 import lombok.Data;
-
-import java.time.LocalDateTime;
 
 /**
  * @ClassName AccessToken
@@ -32,4 +30,9 @@ public class AccessToken {
      * token 过期时间
      */
     private long expriedTime;
+
+
+    // 常量
+    public static String ACCESS_TOKEN = "access_token";
+    public static String EXPIRES_IN = "expires_in";
 }

@@ -1,4 +1,4 @@
-package com.github.sdcxy.wechat.config;
+package com.github.sdcxy.wechat.core.entity;
 
 import lombok.Data;
 
@@ -33,10 +33,16 @@ public class SignatureConfig {
 
     public SignatureConfig(){}
 
-    public SignatureConfig(String signature,String timestamp,String nonce,String echostr){
+    public SignatureConfig(String signature, String timestamp, String nonce, String echostr){
         this.signature = signature;
         this.timestamp = timestamp;
         this.nonce = nonce;
         this.echostr = echostr;
     }
+
+    // 对象常量
+    public static String SIGNATURE = "signature";
+    public static String TIMESTAMP = "timestamp";
+    public static String NONCE = "nonce";
+    public static String ECHOSTR = "echostr";
 }

@@ -1,4 +1,4 @@
-package com.github.sdcxy.util;
+package com.github.sdcxy.wechat.common.util;
 
 import java.security.MessageDigest;
 
