@@ -5,37 +5,30 @@
         ```$xslt
             <dependency>
                 <groupId>com.github.sdcxy</groupId>
-                <artifactId>third-party-platform</artifactId>
+                <artifactId>third-party-platform-wechat</artifactId>
                 <version>0.0.1</version>
             </dependency>
         ```
-   2.  配置类 继承 com.github.sdcxy.wechat.config.WeChatConfig类
+   2.  配置类 application.yml 配置文件配置
         ```
-            配置文件: application.yml
-            weixin:
-              appId: wxce9******767870
-              appSecret: 9********8339
-              token: ****
-              wechat: ***********
-        ```
-        ```
-            @Configuration
-            @ConfigurationProperties(prefix = "weixin")
-            public class WeiXinConfig extends com.github.sdcxy.wechat.config.WeChatConfig {
-            
-            }   
+         third-party-platform:
+           wechat:
+             enabled: true
+             app-id: wxce9****1767870
+             app-secret: 991c******18c526e25508488339
+             token: l**
+             wechat: gh*****c0432c
         ```
    3. 接入方法: com.github.sdcxy.wechat.service.impl.WeChatServiceImpl 的weChatIn
         ```
             @Autowired
-            private WeiXinConfig weiXinConfig;
-                
+            private WeChatService weChatService;
+        
             @GetMapping(value = "/wechat/in")
             @ResponseBody
             public String WeChatIn(String signature,String timestamp,String nonce,String echostr ){
-                WeChatServiceImpl weChatService = new WeChatServiceImpl();
                 SignatureConfig signatureConfig = new SignatureConfig(signature,timestamp,nonce,echostr);
-                return weChatService.weChatIn(signatureConfig, weiXinConfig.getToken());
+                return weChatService.weChatIn(signatureConfig);
             }
            
         ```
@@ -44,8 +37,7 @@
             @PostMapping(value = "/wechat/in")
             @ResponseBody
             public String WeChatOut(HttpServletRequest request) {
-                WeChatServiceImpl weChatService = new WeChatServiceImpl();
-                return weChatService.weChatCallBack(request, weiXinConfig.getToken());
+                return weChatService.weChatCallBack(request);
             }
         ```
    5.   消息响应类处理: com.github.sdcxy.wechat.service.impl.MessageServiceImpl
