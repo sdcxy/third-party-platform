@@ -2,6 +2,7 @@ package com.github.sdcxy.wechat.common.util;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.http.HttpEntity;
+import org.apache.http.HttpStatus;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
@@ -10,11 +11,15 @@ import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.utils.URIBuilder;
 import org.apache.http.entity.StringEntity;
+import org.apache.http.entity.mime.HttpMultipartMode;
+import org.apache.http.entity.mime.MultipartEntityBuilder;
+import org.apache.http.entity.mime.content.FileBody;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.util.EntityUtils;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URISyntaxException;
@@ -30,7 +35,6 @@ import java.util.Map;
  * @Date 2019/9/29 13:27
  **/
 public class HttpClientUtils {
-
 
     /**
      *  无参Get请求
@@ -55,7 +59,7 @@ public class HttpClientUtils {
         CloseableHttpResponse response = null;
         try{
             response  = httpClient.execute(httpGet);
-            if (response.getStatusLine().getStatusCode() == 200) {
+            if (response.getStatusLine().getStatusCode() == HttpStatus.SC_OK) {
                 // 从响应模型中获取响应实体
                 HttpEntity httpEntity = response.getEntity();
                 // 返回响应内容
@@ -97,7 +101,7 @@ public class HttpClientUtils {
     }
 
     /**
-     *  发送post请求     * @param url
+     *  发送post请求  from表单格式
      * @param parameterMap
      * @param header
      * @param token
@@ -130,7 +134,7 @@ public class HttpClientUtils {
 
                 // 发送请求
                 response = httpClient.execute(httpPost);
-                if (response.getStatusLine().getStatusCode() == 200) {
+                if (response.getStatusLine().getStatusCode() == HttpStatus.SC_OK) {
                     resultStr = EntityUtils.toString(response.getEntity(), "utf-8");
                 }
             }
@@ -151,7 +155,15 @@ public class HttpClientUtils {
         return doPost(url,map,null,null);
     }
 
-    public static String doPost(String url,String parameJson,String header,String token) {
+    /**
+     *  发送 json 数据
+     * @param url
+     * @param parameterJson
+     * @param header
+     * @param token
+     * @return
+     */
+    public static String doPost(String url,String parameterJson,String header,String token) {
         String resultStr = null;
         // 获得Http客户端(可以理解为:你得先有一个浏览器;注意:实际上HttpClient与浏览器是不一样的)
         CloseableHttpClient httpClient = HttpClientBuilder.create().build();
@@ -163,11 +175,12 @@ public class HttpClientUtils {
         }
         CloseableHttpResponse response = null;
         try{
-            StringEntity stringEntity = new StringEntity(parameJson);
+            StringEntity stringEntity = new StringEntity(parameterJson);
             httpPost.setEntity(stringEntity);
+
             // 发送请求
             response = httpClient.execute(httpPost);
-            if (response.getStatusLine().getStatusCode() == 200) {
+            if (response.getStatusLine().getStatusCode() == HttpStatus.SC_OK) {
                 resultStr = EntityUtils.toString(response.getEntity(), "utf-8");
             }
         } catch (UnsupportedEncodingException e) {
@@ -176,9 +189,52 @@ public class HttpClientUtils {
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
+        } finally {
+            close(httpClient,response);
         }
         return resultStr;
     }
+
+    /**
+     * 发送文件 素材
+     * @param url
+     * @param parameterMap
+     * @return
+     */
+    public static String doPost(String url,Map<String,Object> parameterMap) {
+        String resultStr = null;
+        CloseableHttpResponse response = null;
+        // 获得Http客户端(可以理解为:你得先有一个浏览器;注意:实际上HttpClient与浏览器是不一样的)
+        CloseableHttpClient httpClient = HttpClientBuilder.create().build();
+        HttpPost httpPost = new HttpPost(url);
+
+        MultipartEntityBuilder multipartEntityBuilder = MultipartEntityBuilder.create();
+        // 设置浏览器兼容模式
+        multipartEntityBuilder.setMode(HttpMultipartMode.BROWSER_COMPATIBLE);
+
+        if (parameterMap != null) {
+            if (parameterMap.size() == 1){
+                multipartEntityBuilder.addBinaryBody("media",new File(parameterMap.get("media").toString()));
+            } else {
+                multipartEntityBuilder.addBinaryBody("media",new File(parameterMap.get("media").toString()));
+                multipartEntityBuilder.addTextBody("description",parameterMap.get("description").toString());
+            }
+        }
+        HttpEntity httpEntity = multipartEntityBuilder.build();
+
+        httpPost.setEntity(httpEntity);
+
+        try {
+            response = httpClient.execute(httpPost);
+            if (response.getStatusLine().getStatusCode() == HttpStatus.SC_OK) {
+                resultStr = EntityUtils.toString(response.getEntity(), "utf-8");
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return resultStr;
+    }
+
     /**
      *  释放资源
      * @param httpClient
@@ -196,5 +252,7 @@ public class HttpClientUtils {
             e.printStackTrace();
         }
     }
+
+
 
 }

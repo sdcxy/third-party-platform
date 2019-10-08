@@ -6,8 +6,12 @@
 
     <groupId>com.github.sdcxy</groupId>
     <artifactId>third-party-platform</artifactId>
-    <packaging>jar</packaging>
-    <version>0.0.1</version>
+    <packaging>pom</packaging>
+    <version>0.0.2</version>
+    <modules>
+        <module>third-party-platform-wechat</module>
+    </modules>
+
 
     <name>third-party-platform</name>
     <description>这是一个第三方平台工具类</description>
@@ -53,12 +57,14 @@
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
 
+        <spring.boot.version>2.1.6.RELEASE</spring.boot.version>
+
         <javax.servlet.version>4.0.1</javax.servlet.version>
         <!--工具类-->
         <lombok.version>1.18.8</lombok.version>
         <apache.commons.lang3.version>3.9</apache.commons.lang3.version>
         <apache.commons.beanUtils.version>1.9.3</apache.commons.beanUtils.version>
-        <apache.http.client.version>4.5.3</apache.http.client.version>
+        <apache.http.client.version>4.5.10</apache.http.client.version>
         <alibaba.fastjson.version>1.2.60</alibaba.fastjson.version>
         <cglib.version>3.3.0</cglib.version>
         <XStream.version>1.4.11.1</XStream.version>
@@ -66,69 +72,15 @@
     </properties>
 
 
-
-
-    <dependencies>
-
-        <!-- https://mvnrepository.com/artifact/javax.servlet/javax.servlet-api -->
-        <dependency>
-            <groupId>javax.servlet</groupId>
-            <artifactId>javax.servlet-api</artifactId>
-            <version>${javax.servlet.version}</version>
-            <scope>provided</scope>
-        </dependency>
-
-
-        <!-- 工具类 -->
-        <!-- https://mvnrepository.com/artifact/org.projectlombok/lombok -->
-        <dependency>
-            <groupId>org.projectlombok</groupId>
-            <artifactId>lombok</artifactId>
-            <version>${lombok.version}</version>
-        </dependency>
-        <!-- https://mvnrepository.com/artifact/org.apache.commons/commons-lang3 -->
-        <dependency>
-            <groupId>org.apache.commons</groupId>
-            <artifactId>commons-lang3</artifactId>
-            <version>${apache.commons.lang3.version}</version>
-        </dependency>
-        <!-- https://mvnrepository.com/artifact/org.apache.httpcomponents/httpclient -->
-        <dependency>
-            <groupId>org.apache.httpcomponents</groupId>
-            <artifactId>httpclient</artifactId>
-            <version>${apache.http.client.version}</version>
-        </dependency>
-        <!-- https://mvnrepository.com/artifact/com.alibaba/fastjson -->
-        <dependency>
-            <groupId>com.alibaba</groupId>
-            <artifactId>fastjson</artifactId>
-            <version>${alibaba.fastjson.version}</version>
-        </dependency>
-        <!-- https://mvnrepository.com/artifact/cglib/cglib -->
-        <dependency>
-            <groupId>cglib</groupId>
-            <artifactId>cglib</artifactId>
-            <version>${cglib.version}</version>
-        </dependency>
-        <!-- https://mvnrepository.com/artifact/com.thoughtworks.xstream/xstream -->
-        <dependency>
-            <groupId>com.thoughtworks.xstream</groupId>
-            <artifactId>xstream</artifactId>
-            <version>${XStream.version}</version>
-        </dependency>
-        <!-- https://mvnrepository.com/artifact/dom4j/dom4j -->
-        <dependency>
-            <groupId>dom4j</groupId>
-            <artifactId>dom4j</artifactId>
-            <version>${dom4j.version}</version>
-        </dependency>
-        <!-- https://mvnrepository.com/artifact/commons-beanutils/commons-beanutils -->
-        <dependency>
-            <groupId>commons-beanutils</groupId>
-            <artifactId>commons-beanutils</artifactId>
-            <version>${apache.commons.beanUtils.version}</version>
-        </dependency>
-    </dependencies>
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>com.github.sdcxy</groupId>
+                <artifactId>third-party-platform-wechat</artifactId>
+                <version>0.0.1</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
 
 
     <profiles>

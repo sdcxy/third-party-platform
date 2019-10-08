@@ -31,4 +31,6 @@ public class WeChatAutoConfigure {
     WeChatProperties weChatProperties(){
         return weChatProperties;
     }
+
+
 }
