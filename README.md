@@ -52,3 +52,25 @@
             链接消息: Link 接口     
             .....event 事件处理方法与消息处理方法一致。详细请查看源码
         ```
+        ```$xslt
+            /**注意: 记得加@Primary注解 */ 
+            @Service
+            @Primary
+            public class TextMessageService implements Text{
+                @Override
+                    public String parseTextMessage(TextMessage textMessage) {
+                        //.....
+                    }
+            }
+        ```
+   6.   菜单管理 com.github.sdcxy.wechat.core.service.impl.CustomMenuServiceImpl
+        ```     // 创建自定义菜单
+               String createCustomMenu(CustomButton customButton, String accessToken);
+               // 查询自定义菜单
+               String queryCustomMenu(String accessToken);
+               // 删除自定义菜单
+               String deleteCustomMenu(String  accessToken);
+        ```     
+   
+   7.   素材管理 com.github.sdcxy.wechat.core.service.impl.MaterialServiceImpl
+        
